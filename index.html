@@ -1,1 +1,121 @@
-this is the index.
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rock Paper Scissors</title>
+  <style>
+    input {
+      font-size: 2em;
+      margin: 10px 1px 0;
+    }
+  </style>
+</head>
+<body>
+<div style ="text-align: center; padding:10px;">
+<button id="ROCK">Rock</button>
+<button id="PAPER">Paper</button>
+<button id="SCISSORS">Scissors</button>
+
+<div id="results"></div>
+<div style = "text-align:left;" id="playerScore">Your Score: </div>
+<div style = "text-align:left;" id="computerScore">Computer Score:</div>
+</div>
+
+
+<script>
+
+const buttons = document.querySelectorAll("button");
+const results = document.querySelector("#results");
+const playerResult = document.querySelector("#playerScore");
+const computerResult = document.querySelector("#computerScore");
+let playerScore = 0;
+let computerScore = 0;
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (playerScore < 5 && computerScore < 5) game(button.id);
+    });
+});
+
+
+function game(playerSelection) {
+playerSelection = playerSelection.toUpperCase(); // change input to upper case.
+// console.log(playerSelection);
+// results.textContent = playerSelection;
+let computerSelection = computerPlay();
+// console.log(playRound(playerSelection, computerSelection));
+results.textContent = playRound(playerSelection, computerSelection);
+playerResult.textContent = "Player Score: " + playerScore;
+computerResult.textContent = "Computer Score: " + computerScore;
+if (playerScore == 5) alert("Player got 5 points.  Player wins!");
+if (computerScore == 5) alert("Computer got 5 points.  Computer wins!");
+
+}
+
+
+function computerPlay() {
+    let computerHand;
+    let randomNumber = Math.random() * 3;
+
+    console.log(randomNumber);
+    if (randomNumber < 1) {
+        computerHand = "ROCK";
+    }
+    else if (randomNumber < 2) {
+        computerHand = "PAPER";
+    }
+    else {
+        computerHand = "SCISSORS";
+    }
+    return computerHand;
+}
+
+
+function playRound(playerSelection, computerSelection) {
+    switch(playerSelection) {
+        case "ROCK":
+        if (computerSelection == "ROCK") {
+            return "Computer also selected ROCK.  Result is a tie!";
+        } else if (computerSelection == "PAPER") {
+            computerScore++;
+            return "Computer selected PAPER.  You lose!";
+        } else {
+            playerScore++;
+            return "Computer selected SCISSORS.  You win!";
+        }
+        break;
+        case "PAPER":
+        if (computerSelection == "PAPER") {
+            return "Computer also selected PAPER.  Result is a tie!";
+        } else if (computerSelection == "SCISSORS") {
+            computerScore++;
+            return "Computer selected SCISSORS.  You lose!";
+        } else {
+            playerScore++;
+            return "Computer selected ROCK.  You win!";
+        }
+        break;
+        case "SCISSORS":
+        if (computerSelection == "SCISSORS") {
+            return "Computer also selected SCISSORS.  Result is a tie!";
+        } else if (computerSelection == "ROCK") {
+            computerScore++;
+            return "Computer selected ROCK.  You lose!";
+        } else {
+            playerScore++;
+            return "Computer selected PAPER.  You win!";
+        }
+        break;
+    }
+
+    if (playerSelection == computerSelection) {
+        return "Tie!";
+    }
+    else {
+        return "Not a Tie!";
+    }
+}
+
+</script>
+</body>
+</html>
